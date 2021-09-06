@@ -5,6 +5,7 @@ import 'package:course_store/widgets/mapbottompill.dart';
 import 'package:course_store/widgets/mapuserbadge.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 const LatLng SOURCE_LOCATION = LatLng(9.078458424235697,
@@ -38,6 +39,11 @@ class _MapPageState extends State<MapPage> {
   LatLng currentLocation;
   LatLng destinationLocation;
   bool userBadgeSelected = false;
+
+  Set<Polyline> _polylines = Set<Polyline>();
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints;
+
   //5.override the initstate since we will do some initialization up front such as set up initial location and set up the marker icons
   @override
   void initState() {
@@ -48,6 +54,7 @@ class _MapPageState extends State<MapPage> {
     // set up the marker icons
     //9. invoke the method here
     this.setSourceAndDestinationMarkerIcons();
+    polylinePoints = PolylinePoints();
   }
 
   //6. create setinitialLocation method which will hold the current and destination location
@@ -81,6 +88,7 @@ class _MapPageState extends State<MapPage> {
                 myLocationEnabled: true,
                 compassEnabled: false,
                 tiltGesturesEnabled: false,
+                polylines: _polylines,
                 markers: _makers,
                 mapType: MapType.normal,
                 initialCameraPosition: initialCameraPosition,
@@ -95,6 +103,7 @@ class _MapPageState extends State<MapPage> {
 
                   //13. Add the the custom marker let us create a method called showPinsOnMap
                   showPinsOnMap();
+                  setPolylines();
                 },
               ),
             ),
@@ -154,5 +163,27 @@ class _MapPageState extends State<MapPage> {
             }),
       );
     });
+  }
+
+  void setPolylines() async {
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      'AIzaSyAyXOuL-w3bfY7XnCYvoDVX29DSB9_lWGs',
+      PointLatLng(currentLocation.latitude, currentLocation.longitude),
+      PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
+    );
+    if (result.status == 'OK') {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+      setState(() {
+        _polylines.add(
+          Polyline(
+              width: 10,
+              polylineId: PolylineId('polyLine'),
+              color: Color(0xFF08A5CB),
+              points: polylineCoordinates),
+        );
+      });
+    }
   }
 }
