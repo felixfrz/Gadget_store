@@ -59,7 +59,8 @@ class SelectedCategoryPage extends StatelessWidget {
                           ClipOval(
                             child: Image.asset(
                               'assets/imgs/' +
-                                  selectedCategory.subCategories[index].imgName +
+                                  selectedCategory
+                                      .subCategories[index].imgName +
                                   '.jpg',
                               fit: BoxFit.cover,
                               width: 100,

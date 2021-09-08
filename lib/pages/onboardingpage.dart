@@ -148,7 +148,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (contex) => CategoryListPage(),
+                    builder: (context) => CategoryListPage(),
                   ),
                 );
               },

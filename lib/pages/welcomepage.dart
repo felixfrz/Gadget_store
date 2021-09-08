@@ -2,14 +2,18 @@ import 'package:course_store/helper/appcolors.dart';
 import 'package:course_store/helper/iconhelper.dart';
 import 'package:course_store/pages/categorylistpage.dart';
 import 'package:course_store/pages/onboardingpage.dart';
+import 'package:course_store/services/loginservice.dart';
 import 'package:course_store/widgets/iconfont.dart';
 import 'package:course_store/widgets/themebutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    LoginService loginService =
+        Provider.of<LoginService>(context, listen: false);
     return Scaffold(
       body: Container(
         color: Colors.black,
@@ -87,13 +91,17 @@ class WelcomePage extends StatelessWidget {
                     highlight: AppColors.MAIN_COLOR.withOpacity(0.5),
                     borderColor: AppColors.MAIN_COLOR,
                     borderWidth: 4,
-                    onClick: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (ctx) => CategoryListPage(),
-                        ),
-                      );
+                    onClick: () async {
+                      bool success = await loginService.signInWithGoogle();
+                      if (success) {
+                        print('user login');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => CategoryListPage(),
+                          ),
+                        );
+                      }
                     },
                   ),
                 ],

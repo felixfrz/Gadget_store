@@ -1,6 +1,7 @@
 import 'package:course_store/helper/appcolors.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class UnitPriceWidget extends StatefulWidget {
   int amount = 0;
   double price = 15.0;
@@ -25,7 +26,7 @@ class _UnitPriceWidgetState extends State<UnitPriceWidget> {
                   TextSpan(
                       text: 'Part ',
                       style: TextStyle(fontWeight: FontWeight.bold)),
-                  TextSpan(text: 'max. 5', style: TextStyle(fontSize: 12)),
+                  TextSpan(text: 'max. 10', style: TextStyle(fontSize: 12)),
                 ]),
               ),
             ),
