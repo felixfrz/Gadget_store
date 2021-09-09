@@ -15,15 +15,23 @@ void main() {
     Provider(
       create: (_) => LoginService(),
       child: MaterialApp(
-          theme: ThemeData(fontFamily: 'Raleway'),
-          debugShowCheckedModeBanner: false,
-          // home: DetailsPage(subCategory: Utils.getMockedCategories()[0].subCategories[0],),
-          // home: SplashPage(duration: 3, goToPage: WelcomePage()),
-          // home: CategoryListPage(),
-
-          home: SelectedCategoryPage(
-            selectedCategory: Utils.getMockedCategories()[0],
-          )),
+        theme: ThemeData(fontFamily: 'Raleway'),
+        debugShowCheckedModeBanner: false,
+        // home: DetailsPage(subCategory: Utils.getMockedCategories()[0].subCategories[0],),
+        home: SplashPage(duration: 3, goToPage: WelcomePage()),
+        // home: CategoryListPage(),
+        // home: SelectedCategoryPage(selectedCategory: Utils.getMockedCategories()[0] )
+        //
+        // initialRoute: '/',
+        // routes: {
+        //   '/': (context) => SplashPage(duration: 3, goToPage: WelcomePage()),
+        //   'welcomepage': (context) => WelcomePage(),
+        //   '/categorylistpage': (context) => CategoryListPage(),
+        //   '/detailspage': (context) => DetailsPage(),
+        //   '/mappage': (context) => MapPage(),
+        //   '/onboardingpage': (context) => OnboardingPage(),
+        // },
+      ),
     ),
   );
 }

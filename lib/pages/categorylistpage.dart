@@ -7,6 +7,7 @@ import 'package:course_store/widgets/categorybottombar.dart';
 import 'package:course_store/widgets/categorycard.dart';
 import 'package:course_store/widgets/iconfont.dart';
 import 'package:course_store/widgets/mainappbar.dart';
+import 'package:course_store/widgets/sidemenubar.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -15,7 +16,9 @@ class CategoryListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: SideMenuBar(),
+      ),
       appBar: MainAppBar(),
       body: Container(
         child: Stack(

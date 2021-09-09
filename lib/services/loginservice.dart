@@ -9,6 +9,8 @@ class LoginService {
   }
   LoginUserModel _userModel;
   LoginUserModel get loggedInUserModel => _userModel;
+
+  //=================================
   Future<bool> signInWithGoogle() async {
     // Trigger the authentication flow
     GoogleSignIn googleSignIn = GoogleSignIn();

@@ -64,7 +64,12 @@ class WelcomePage extends StatelessWidget {
                   ),
                   SizedBox(height: 40),
                   ThemeButton(
-                    onClick: () {},
+                    onClick: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CategoryListPage()));
+                    },
                     label: 'Try Now!',
                     highlight: Colors.red.shade900.withOpacity(0.3),
                     color: AppColors.MAIN_COLOR,

@@ -35,6 +35,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       appBar: MainAppBar(),
       body: Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               child: PageView(
@@ -61,6 +62,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           )
                         ]),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Expanded(
                           child: Column(
@@ -98,7 +100,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (contex) => CategoryListPage(),
+                                  builder: (context) => CategoryListPage(),
                                 ),
                               );
                             },
@@ -135,7 +137,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       border: Border.all(
                         width: 6,
                         color: pageIndex == index
-                            ? Color(0xFFB00020)
+                            ? Color(0xFFB16171)
                             : Theme.of(context).canvasColor,
                       ),
                     ),
