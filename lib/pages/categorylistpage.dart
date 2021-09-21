@@ -1,20 +1,22 @@
-import 'package:course_store/helper/appcolors.dart';
-import 'package:course_store/helper/iconhelper.dart';
 import 'package:course_store/helper/utils.dart';
 import 'package:course_store/models/category.dart';
 import 'package:course_store/pages/selectedcategorypage.dart';
+import 'package:course_store/services/categoryselectionservice.dart';
 import 'package:course_store/widgets/categorybottombar.dart';
 import 'package:course_store/widgets/categorycard.dart';
-import 'package:course_store/widgets/iconfont.dart';
 import 'package:course_store/widgets/mainappbar.dart';
 import 'package:course_store/widgets/sidemenubar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class CategoryListPage extends StatelessWidget {
   List<Category> categories = Utils.getMockedCategories();
   @override
   Widget build(BuildContext context) {
+    CategorySelectionService catSelection =
+        Provider.of<CategorySelectionService>(context, listen: false);
+
     return Scaffold(
       drawer: Drawer(
         child: SideMenuBar(),
@@ -44,14 +46,9 @@ class CategoryListPage extends StatelessWidget {
                       return CategoryCard(
                         category: categories[index],
                         onCardClick: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SelectedCategoryPage(
-                                selectedCategory: categories[index],
-                              ),
-                            ),
-                          );
+                          catSelection.selectedCategory = categories[index];
+                          Navigator.of(context)
+                              .pushNamed('/selectedcategorypage');
                         },
                       );
                     },

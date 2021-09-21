@@ -15,53 +15,95 @@ class SideMenuBar extends StatelessWidget {
     bool userLoggedIn = loginService.loggedInUserModel != null;
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(50),
-        color: AppColors.MAIN_COLOR,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextButton(
-              onPressed: () async {
-                if (userLoggedIn) {
-                  await loginService.signOut();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => WelcomePage()));
-                } else {
-                  bool success = await loginService.signInWithGoogle();
-                  if (success) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CategoryListPage()));
-                  }
-                }
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    userLoggedIn ? Icons.logout : Icons.login,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    userLoggedIn ? 'Sign Out' : 'Sign In',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  )
+          // padding: EdgeInsets.only(
+          //     top: MediaQuery.of(context).size.height * 0.1,
+          //     bottom: 50,
+          //     right: 50,
+          //     left: 50),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.indigo,
+                  AppColors.MAIN_COLOR,
                 ],
+                stops: [
+                  0.4,
+                  0.8
+                ]),
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.3,
+                  child: Image.asset(
+                    'assets/imgs/welcomeImage.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
-            IconFont(
-              iconName: IconFontHelper.PHONE,
-              size: 70,
-              color: Colors.white,
-            )
-          ],
-        ),
-      ),
+              Positioned(
+                child: Container(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.1,
+                      bottom: 50,
+                      right: 50,
+                      left: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          if (userLoggedIn) {
+                            await loginService.signOut();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WelcomePage()));
+                          } else {
+                            bool success =
+                                await loginService.signInWithGoogle();
+                            if (success) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CategoryListPage()));
+                            }
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              userLoggedIn ? Icons.logout : Icons.login,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              userLoggedIn ? 'Sign Out' : 'Sign In',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            )
+                          ],
+                        ),
+                      ),
+                      IconFont(
+                        iconName: IconFontHelper.PHONE,
+                        size: 70,
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }

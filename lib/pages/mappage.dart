@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:course_store/models/subcategory.dart';
+import 'package:course_store/services/categoryselectionservice.dart';
 import 'package:course_store/widgets/mainappbar.dart';
 import 'package:course_store/widgets/mapbottompill.dart';
 import 'package:course_store/widgets/mapuserbadge.dart';
@@ -7,6 +9,7 @@ import 'package:course_store/widgets/mapuserbadge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 const LatLng SOURCE_LOCATION = LatLng(9.078458424235697,
     7.491810651744274); //9.078458424235697, 7.491810651744274
@@ -20,6 +23,7 @@ const double PIN_VISIBLE_POSITION = 20;
 const double PIN_INVISIBLE_POSITION = -220;
 
 class MapPage extends StatefulWidget {
+  SubCategory subCategory;
   @override
   _MapPageState createState() => _MapPageState();
 }
@@ -75,6 +79,10 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
+    CategorySelectionService catSelection =
+        Provider.of<CategorySelectionService>(context, listen: false);
+    widget.subCategory = catSelection.selectedSubCategory;
+
     //11. Add the camera postion instance which lead to the map or else it wont render correctly when we show it
     CameraPosition initialCameraPosition = CameraPosition(
         zoom: CAMERA_ZOOM, tilt: CAMERA_TILT, target: SOURCE_LOCATION);

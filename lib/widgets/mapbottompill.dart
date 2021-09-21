@@ -1,15 +1,20 @@
 import 'package:course_store/helper/appcolors.dart';
 import 'package:course_store/helper/iconhelper.dart';
+import 'package:course_store/models/subcategory.dart';
+import 'package:course_store/services/categoryselectionservice.dart';
 import 'package:course_store/widgets/categoryicon.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MapButtomPill extends StatelessWidget {
-  const MapButtomPill({
-    Key key,
-  }) : super(key: key);
+  SubCategory subCategory;
 
   @override
   Widget build(BuildContext context) {
+    CategorySelectionService catSelection =
+        Provider.of<CategorySelectionService>(context, listen: false);
+
+    subCategory = catSelection.selectedSubCategory;
     return Container(
       margin: EdgeInsets.all(20),
       padding: EdgeInsets.all(15),

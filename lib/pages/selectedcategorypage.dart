@@ -2,16 +2,23 @@ import 'package:course_store/helper/appcolors.dart';
 import 'package:course_store/helper/iconhelper.dart';
 import 'package:course_store/models/category.dart';
 import 'package:course_store/pages/detailspage.dart';
+import 'package:course_store/services/categoryselectionservice.dart';
 import 'package:course_store/widgets/categoryicon.dart';
 import 'package:course_store/widgets/iconfont.dart';
 import 'package:course_store/widgets/mainappbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SelectedCategoryPage extends StatelessWidget {
   Category selectedCategory;
   SelectedCategoryPage({this.selectedCategory});
   @override
   Widget build(BuildContext context) {
+    CategorySelectionService catSelection =
+        Provider.of<CategorySelectionService>(context, listen: false);
+
+    selectedCategory = catSelection.selectedCategory;
+
     return Scaffold(
       appBar: MainAppBar(),
       body: Container(
@@ -44,27 +51,28 @@ class SelectedCategoryPage extends StatelessWidget {
                   selectedCategory.subCategories.length,
                   (index) => GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailsPage(
-                            subCategory: selectedCategory.subCategories[index],
-                          ),
-                        ),
-                      );
+                      catSelection.selectedSubCategory =
+                          selectedCategory.subCategories[index];
+                      Navigator.of(context).pushNamed('/detailspage');
                     },
                     child: Container(
                       child: Column(
                         children: [
                           ClipOval(
-                            child: Image.asset(
-                              'assets/imgs/' +
+                            child: Hero(
+                              tag: 'assets/imgs/' +
                                   selectedCategory
                                       .subCategories[index].imgName +
-                                  '.jpg',
-                              fit: BoxFit.cover,
-                              width: 100,
-                              height: 100,
+                                  '_desc.jpg',
+                              child: Image.asset(
+                                'assets/imgs/' +
+                                    selectedCategory
+                                        .subCategories[index].imgName +
+                                    '.jpg',
+                                fit: BoxFit.cover,
+                                width: 100,
+                                height: 100,
+                              ),
                             ),
                           ),
                           SizedBox(

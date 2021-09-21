@@ -99,7 +99,26 @@ class WelcomePage extends StatelessWidget {
                     onClick: () async {
                       bool success = await loginService.signInWithGoogle();
                       if (success) {
-                        print('user login');
+                        final snackBar = SnackBar(
+                          duration: Duration(seconds: 5),
+                          content: Row(
+                            children: [
+                              Icon(
+                                Icons.thumb_up,
+                                color: AppColors.MAIN_COLOR,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                  'Welcome back ${loginService.loggedInUserModel.displayName}'),
+                            ],
+                          ),
+                          backgroundColor: Colors.black54,
+                          // action: SnackBarAction(
+                          //   label: 'dismiss',
+                          //   onPressed: () {},
+                          // ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

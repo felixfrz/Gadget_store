@@ -32,3 +32,14 @@ class SplashPage extends StatelessWidget {
     );
   }
 }
+
+
+// setVisitingFlag()async{
+//   SharedPreferences preferences = await SharedPreferences.getInstance();
+//   preferences.setBool('alreadyVisited', true);
+// }
+// getVisitingFlag()async{
+//   SharedPreferences preferences = await SharedPreferences.getInstance();
+//   bool alreadyVisited = preferences.getBool('alreadyVisted') ?? false;
+//   return alreadyVisited;
+// }

@@ -1,12 +1,14 @@
 import 'package:course_store/helper/appcolors.dart';
 import 'package:course_store/models/subcategory.dart';
 import 'package:course_store/pages/mappage.dart';
+import 'package:course_store/services/categoryselectionservice.dart';
 import 'package:course_store/widgets/categoryicon.dart';
 import 'package:course_store/widgets/categorypartslist.dart';
 import 'package:course_store/widgets/mainappbar.dart';
 import 'package:course_store/widgets/themebutton.dart';
 import 'package:course_store/widgets/unitpricewidget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailsPage extends StatefulWidget {
   SubCategory subCategory;
@@ -19,6 +21,9 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
+    CategorySelectionService catSelection =
+        Provider.of<CategorySelectionService>(context, listen: false);
+    widget.subCategory = catSelection.selectedSubCategory;
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -30,14 +35,19 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               child: Stack(
                 children: [
-                  Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/imgs/' +
-                              widget.subCategory.imgName +
-                              '_desc.jpg'),
-                          fit: BoxFit.cover),
+                  Hero(
+                    tag: 'assets/imgs/' +
+                        widget.subCategory.imgName +
+                        '_desc.jpg',
+                    child: Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/imgs/' +
+                                widget.subCategory.imgName +
+                                '_desc.jpg'),
+                            fit: BoxFit.cover),
+                      ),
                     ),
                   ),
                   Positioned.fill(
@@ -71,7 +81,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           Column(
                             children: [
                               Text(
-                                'Hp Laptop parts',
+                                widget.subCategory.name,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -133,43 +143,49 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
             Expanded(
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    //Category Parts List
-                    CategoryPartsList(subCategory: widget.subCategory),
-                    //Price Unit Section
-                    UnitPriceWidget(),
-                    //Theme Buttons
-                    ThemeButton(
-                      label: 'Add to cart',
-                      icon: Icon(
-                        Icons.shopping_cart,
-                        color: Colors.white,
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      //Category Parts List
+                      Visibility(
+                        visible: widget.subCategory.parts.length > 0,
+                        child:
+                            CategoryPartsList(subCategory: widget.subCategory),
                       ),
-                      highlight: AppColors.HIGHLIGHT_DEFAULT.withOpacity(0.3),
-                      onClick: () {},
-                    ),
-                    ThemeButton(
-                      labelColor: AppColors.MAIN_COLOR,
-                      label: 'Product Location',
-                      icon: Icon(
-                        Icons.location_pin,
-                        color: AppColors.MAIN_COLOR,
+                      //Price Unit Section
+                      UnitPriceWidget(),
+                      //Theme Buttons
+                      ThemeButton(
+                        label: 'Add to cart',
+                        icon: Icon(
+                          Icons.shopping_cart,
+                          color: Colors.white,
+                        ),
+                        highlight: AppColors.HIGHLIGHT_DEFAULT.withOpacity(0.3),
+                        onClick: () {},
                       ),
-                      onClick: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MapPage(),
-                          ),
-                        );
-                      },
-                      color: AppColors.HIGHLIGHT_DEFAULT,
-                      highlight: AppColors.MAIN_COLOR.withOpacity(0.3),
-                    ),
-                  ],
+                      ThemeButton(
+                        labelColor: AppColors.MAIN_COLOR,
+                        label: 'Product Location',
+                        icon: Icon(
+                          Icons.location_pin,
+                          color: AppColors.MAIN_COLOR,
+                        ),
+                        onClick: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MapPage(),
+                            ),
+                          );
+                        },
+                        color: AppColors.HIGHLIGHT_DEFAULT,
+                        highlight: AppColors.MAIN_COLOR.withOpacity(0.3),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )
