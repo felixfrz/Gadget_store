@@ -1,4 +1,3 @@
-import 'package:course_store/helper/utils.dart';
 import 'package:course_store/pages/categorylistpage.dart';
 import 'package:course_store/pages/detailspage.dart';
 import 'package:course_store/pages/mappage.dart';
@@ -28,7 +27,7 @@ void main() {
         initialRoute: '/',
         routes: {
           '/': (context) => SplashPage(duration: 3, goToPage: WelcomePage()),
-          'welcomepage': (context) => WelcomePage(),
+          '/welcomepage': (context) => WelcomePage(),
           '/categorylistpage': (context) => CategoryListPage(),
           '/selectedcategorypage': (context) => SelectedCategoryPage(),
           '/detailspage': (context) => DetailsPage(),

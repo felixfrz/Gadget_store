@@ -22,16 +22,14 @@ class SideMenuBar extends StatelessWidget {
           //     left: 50),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.indigo,
-                  AppColors.MAIN_COLOR,
-                ],
-                stops: [
-                  0.4,
-                  0.8
-                ]),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.indigo,
+                AppColors.MAIN_COLOR,
+              ],
+              stops: [0.4, 0.8],
+            ),
           ),
           child: Stack(
             children: [
@@ -59,19 +57,14 @@ class SideMenuBar extends StatelessWidget {
                         onPressed: () async {
                           if (userLoggedIn) {
                             await loginService.signOut();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WelcomePage()));
+                            Navigator.of(context)
+                                .pushReplacementNamed('/welcomepage');
                           } else {
                             bool success =
                                 await loginService.signInWithGoogle();
                             if (success) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CategoryListPage()));
+                              Navigator.of(context)
+                                  .pushNamed('/categorylistpage');
                             }
                           }
                         },

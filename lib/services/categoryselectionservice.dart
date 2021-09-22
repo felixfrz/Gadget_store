@@ -11,6 +11,7 @@ class CategorySelectionService {
     _selectedCategory = value;
   }
 
+  // ignore: unnecessary_getters_setters
   SubCategory get selectedSubCategory => _selectedSubCategory;
   set selectedSubCategory(SubCategory value) {
     _selectedSubCategory = value;

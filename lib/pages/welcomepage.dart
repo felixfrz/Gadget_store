@@ -65,10 +65,7 @@ class WelcomePage extends StatelessWidget {
                   SizedBox(height: 40),
                   ThemeButton(
                     onClick: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CategoryListPage()));
+                      Navigator.of(context).pushNamed('/categorylistpage');
                     },
                     label: 'Try Now!',
                     highlight: Colors.red.shade900.withOpacity(0.3),
@@ -80,12 +77,7 @@ class WelcomePage extends StatelessWidget {
                     highlight: AppColors.MAIN_COLOR.withOpacity(0.3),
                     color: AppColors.HIGHLIGHT_DEFAULT,
                     onClick: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (contex) => OnboardingPage(),
-                        ),
-                      );
+                      Navigator.of(context).pushNamed('/onboardingpage');
                     },
                   ),
                   //Custom button widget
@@ -119,12 +111,7 @@ class WelcomePage extends StatelessWidget {
                           // ),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (ctx) => CategoryListPage(),
-                          ),
-                        );
+                        Navigator.of(context).pushNamed('/categorylistpage');
                       }
                     },
                   ),

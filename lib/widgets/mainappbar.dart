@@ -20,10 +20,17 @@ class MainAppBarState extends State<MainAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: IconFont(
-        iconName: IconFontHelper.PHONE,
-        color: widget.themeColor,
-        size: 40,
+      title: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed('/categorylistpage');
+        },
+        child: Center(
+          child: IconFont(
+            iconName: IconFontHelper.PHONE,
+            color: widget.themeColor,
+            size: 40,
+          ),
+        ),
       ),
       backgroundColor: Colors.transparent,
       elevation: 0.0,

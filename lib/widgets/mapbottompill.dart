@@ -38,7 +38,7 @@ class MapButtomPill extends StatelessWidget {
                   children: [
                     ClipOval(
                       child: Image.asset(
-                        'assets/imgs/hp_desc.jpg',
+                        'assets/imgs/${subCategory.imgName}.jpg',
                         width: 60,
                         height: 60,
                         fit: BoxFit.cover,
@@ -49,8 +49,8 @@ class MapButtomPill extends StatelessWidget {
                       right: -10,
                       child: CategoryIcon(
                         padding: 10,
-                        color: AppColors.LAPTOPS,
-                        iconName: IconFontHelper.LAPTOP,
+                        color: subCategory.color,
+                        iconName: subCategory.icon,
                         size: 20,
                       ),
                     )
@@ -62,7 +62,7 @@ class MapButtomPill extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Charger',
+                        subCategory.name,
                         style: TextStyle(
                           color: Colors.grey[700],
                           fontWeight: FontWeight.bold,
@@ -72,14 +72,14 @@ class MapButtomPill extends StatelessWidget {
                       Text('Sale by Item'),
                       Text(
                         '2km away',
-                        style: TextStyle(color: AppColors.LAPTOPS),
+                        style: TextStyle(color: subCategory.color),
                       )
                     ],
                   ),
                 ),
                 Icon(
                   Icons.location_pin,
-                  color: AppColors.LAPTOPS,
+                  color: subCategory.color,
                   size: 50,
                 )
               ],
@@ -97,7 +97,7 @@ class MapButtomPill extends StatelessWidget {
                     image: DecorationImage(
                         image: AssetImage('assets/imgs/bayo.jpg'),
                         fit: BoxFit.cover),
-                    border: Border.all(color: AppColors.LAPTOPS, width: 4),
+                    border: Border.all(color: subCategory.color, width: 4),
                   ),
                 ),
                 SizedBox(width: 20),
