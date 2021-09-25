@@ -1,6 +1,8 @@
 import 'package:course_store/helper/appcolors.dart';
+import 'package:course_store/models/cartitem.dart';
 import 'package:course_store/models/subcategory.dart';
 import 'package:course_store/pages/mappage.dart';
+import 'package:course_store/services/cartservice.dart';
 import 'package:course_store/services/categoryselectionservice.dart';
 import 'package:course_store/widgets/categoryicon.dart';
 import 'package:course_store/widgets/categorypartslist.dart';
@@ -24,6 +26,7 @@ class _DetailsPageState extends State<DetailsPage> {
     CategorySelectionService catSelection =
         Provider.of<CategorySelectionService>(context, listen: false);
     widget.subCategory = catSelection.selectedSubCategory;
+    CartService cartService = Provider.of<CartService>(context, listen: false);
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -123,10 +126,14 @@ class _DetailsPageState extends State<DetailsPage> {
                           ]),
                       child: Row(
                         children: [
-                          Text(
-                            '3',
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
+                          Consumer<CartService>(
+                              builder: (context, cart, child) {
+                            return Text(
+                              '${cart.items.length}',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            );
+                          }),
                           Icon(
                             Icons.shopping_cart,
                             color: Colors.white,
@@ -157,15 +164,51 @@ class _DetailsPageState extends State<DetailsPage> {
                       //Price Unit Section
                       UnitPriceWidget(),
                       //Theme Buttons
-                      ThemeButton(
-                        label: 'Add to cart',
-                        icon: Icon(
-                          Icons.shopping_cart,
-                          color: Colors.white,
-                        ),
-                        highlight: AppColors.HIGHLIGHT_DEFAULT.withOpacity(0.3),
-                        onClick: () {},
-                      ),
+                      Consumer<CartService>(builder: (context, cart, child) {
+                        Widget cartButton;
+                        if (!cart
+                            .isSubCategoryAddedToCart(widget.subCategory)) {
+                          cartButton = ThemeButton(
+                            label: 'Add to cart',
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: Colors.white,
+                            ),
+                            highlight:
+                                AppColors.HIGHLIGHT_DEFAULT.withOpacity(0.3),
+                            onClick: () {
+                              cartService.add(
+                                CartItem(category: widget.subCategory),
+                              );
+                            },
+                          );
+                        } else {
+                          cartButton = Container(
+                            padding: EdgeInsets.all(26),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Added to Cart',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.MAIN_COLOR),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  Icons.check_circle,
+                                  size: 30,
+                                  color: AppColors.MAIN_COLOR,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return cartButton;
+                      }),
                       ThemeButton(
                         labelColor: AppColors.MAIN_COLOR,
                         label: 'Product Location',

@@ -1,11 +1,19 @@
 import 'package:course_store/helper/appcolors.dart';
+import 'package:course_store/models/subcategory.dart';
+import 'package:course_store/services/categoryselectionservice.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class UnitPriceWidget extends StatefulWidget {
+  Color themeColor;
   int amount = 0;
   double price = 15.0;
   double cost = 0.0;
+  UnitPriceWidget({
+    this.price,
+    this.themeColor = AppColors.MAIN_COLOR,
+  });
 
   @override
   _UnitPriceWidgetState createState() => _UnitPriceWidgetState();
@@ -14,6 +22,12 @@ class UnitPriceWidget extends StatefulWidget {
 class _UnitPriceWidgetState extends State<UnitPriceWidget> {
   @override
   Widget build(BuildContext context) {
+    CategorySelectionService catSelection =
+        Provider.of<CategorySelectionService>(context);
+    SubCategory subCategory = catSelection.selectedSubCategory;
+    widget.themeColor = subCategory.color;
+    widget.price = subCategory.price;
+
     return Column(
       children: [
         Column(
@@ -48,51 +62,70 @@ class _UnitPriceWidgetState extends State<UnitPriceWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: widget.amount < 10
+                    onTap: catSelection.selectedSubCategory.amount < 10
                         ? () {
-                            setState(() {
-                              widget.amount++;
-                              widget.cost = widget.price * widget.amount;
-                            });
+                            // setState(() {
+                            //   widget.amount++;
+                            //   widget.cost = widget.price * widget.amount;
+                            // });
+                            catSelection.selectedSubCategory.amount++;
+                            catSelection.selectedSubCategory =
+                                catSelection.selectedSubCategory;
                           }
                         : null,
                     child: Icon(
                       Icons.add_circle_outline,
                       size: 50,
-                      color: AppColors.LAPTOPS,
+                      color: catSelection.selectedSubCategory.amount < 10
+                          ? widget.themeColor
+                          : widget.themeColor.withOpacity(0.2),
                     ),
                   ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: Center(
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                  text: widget.amount.toString(),
-                                  style: TextStyle(fontSize: 40)),
-                              TextSpan(
-                                  text: 'itms', style: TextStyle(fontSize: 20)),
-                            ],
+                      child: Consumer<CategorySelectionService>(
+                          builder: (context, cat, child) {
+                        return Center(
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text:
+                                        catSelection.selectedSubCategory != null
+                                            ? catSelection
+                                                .selectedSubCategory.amount
+                                                .toString()
+                                            : '0',
+                                    style: TextStyle(fontSize: 40)),
+                                TextSpan(
+                                    text: 'itms',
+                                    style: TextStyle(fontSize: 20)),
+                              ],
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                     ),
                   ),
                   GestureDetector(
-                    onTap: widget.amount > 0
+                    onTap: catSelection.selectedSubCategory.amount > 0
                         ? () {
-                            setState(() {
-                              widget.amount--;
-                              widget.cost = widget.price * widget.amount;
-                            });
+                            // setState(() {
+                            //   widget.amount--;
+                            //   widget.cost = widget.price * widget.amount;
+                            // });
+                            catSelection.selectedSubCategory.amount--;
+                            catSelection.selectedSubCategory =
+                                catSelection.selectedSubCategory;
                           }
                         : null,
                     child: Icon(
                       Icons.remove_circle_outline,
                       size: 50,
-                      color: Colors.grey,
+                      color: catSelection.selectedSubCategory.amount > 0
+                          ? Colors.grey
+                          : Colors.grey[100],
                     ),
                   ),
                 ],

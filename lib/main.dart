@@ -5,6 +5,7 @@ import 'package:course_store/pages/onboardingpage.dart';
 import 'package:course_store/pages/selectedcategorypage.dart';
 import 'package:course_store/pages/splashpage.dart';
 import 'package:course_store/pages/welcomepage.dart';
+import 'package:course_store/services/cartservice.dart';
 import 'package:course_store/services/categoryselectionservice.dart';
 import 'package:course_store/services/loginservice.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,12 @@ void main() {
         Provider(
           create: (_) => LoginService(),
         ),
-        Provider(
+        ChangeNotifierProvider(
           create: (_) => CategorySelectionService(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartService(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(fontFamily: 'Raleway'),
