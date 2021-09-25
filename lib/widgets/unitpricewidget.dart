@@ -62,21 +62,22 @@ class _UnitPriceWidgetState extends State<UnitPriceWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: catSelection.selectedSubCategory.amount < 10
+                    onTap: catSelection.subCategoryAmount < 10
                         ? () {
                             // setState(() {
                             //   widget.amount++;
                             //   widget.cost = widget.price * widget.amount;
                             // });
-                            catSelection.selectedSubCategory.amount++;
-                            catSelection.selectedSubCategory =
-                                catSelection.selectedSubCategory;
+                            // catSelection.selectedSubCategory.amount++;
+                            // catSelection.selectedSubCategory =
+                            //     catSelection.selectedSubCategory;
+                            catSelection.incrementSubCategoryAmount();
                           }
                         : null,
                     child: Icon(
                       Icons.add_circle_outline,
                       size: 50,
-                      color: catSelection.selectedSubCategory.amount < 10
+                      color: catSelection.subCategoryAmount < 10
                           ? widget.themeColor
                           : widget.themeColor.withOpacity(0.2),
                     ),
@@ -93,8 +94,7 @@ class _UnitPriceWidgetState extends State<UnitPriceWidget> {
                                 TextSpan(
                                     text:
                                         catSelection.selectedSubCategory != null
-                                            ? catSelection
-                                                .selectedSubCategory.amount
+                                            ? catSelection.subCategoryAmount
                                                 .toString()
                                             : '0',
                                     style: TextStyle(fontSize: 40)),
@@ -109,21 +109,22 @@ class _UnitPriceWidgetState extends State<UnitPriceWidget> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: catSelection.selectedSubCategory.amount > 0
+                    onTap: catSelection.subCategoryAmount > 0
                         ? () {
                             // setState(() {
                             //   widget.amount--;
                             //   widget.cost = widget.price * widget.amount;
                             // });
-                            catSelection.selectedSubCategory.amount--;
-                            catSelection.selectedSubCategory =
-                                catSelection.selectedSubCategory;
+                            // catSelection.selectedSubCategory.amount--;
+                            // catSelection.selectedSubCategory =
+                            //     catSelection.selectedSubCategory;
+                            catSelection.decrementSubCategoryAmount();
                           }
                         : null,
                     child: Icon(
                       Icons.remove_circle_outline,
                       size: 50,
-                      color: catSelection.selectedSubCategory.amount > 0
+                      color: catSelection.subCategoryAmount > 0
                           ? Colors.grey
                           : Colors.grey[100],
                     ),
@@ -142,7 +143,7 @@ class _UnitPriceWidgetState extends State<UnitPriceWidget> {
                       children: [
                         TextSpan(text: 'Price: '),
                         TextSpan(
-                          text: '\$${widget.price} / item',
+                          text: '\$${widget.price.toStringAsFixed(2)} / item',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
