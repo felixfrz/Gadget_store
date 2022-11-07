@@ -34,6 +34,8 @@ class SplashPage extends StatelessWidget {
 }
 
 
+
+
 // setVisitingFlag()async{
 //   SharedPreferences preferences = await SharedPreferences.getInstance();
 //   preferences.setBool('alreadyVisited', true);
