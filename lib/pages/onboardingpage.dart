@@ -8,6 +8,8 @@ import 'package:course_store/widgets/mainappbar.dart';
 import 'package:course_store/widgets/themebutton.dart';
 import 'package:flutter/material.dart';
 
+
+
 class OnboardingPage extends StatefulWidget {
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
